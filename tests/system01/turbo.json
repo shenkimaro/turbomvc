@@ -1,0 +1,7 @@
+{
+  "name": "system01",
+  "description": "System01 project config",
+  "extra": {
+    "project-path": "."
+  }
+}

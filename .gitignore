@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.idea
+/nbproject
+/tfpdf/font/unifont/*.dat
+/tfpdf/font/unifont/*.cw127.php
+/tfpdf/font/unifont/*.mtx.php
+/SOLUCAO_HEADERS_SWOOLE.md
