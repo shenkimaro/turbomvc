@@ -1,8 +1,5 @@
 <?php
 
-require_once 'RestfulOutputInterface.php';
-require_once 'Restful.php5';
-
 /**
  * Implementação do Restful para Swoole que escreve no response object
  * Compatível com execução contínua em memória

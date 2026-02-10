@@ -1,8 +1,5 @@
 <?php
 
-require_once 'RestfulOutputInterface.php';
-require_once 'Restful.php5';
-
 /**
  * Implementação tradicional do Restful que usa echo e die
  * Mantém compatibilidade total com o código existente
