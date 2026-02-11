@@ -46,7 +46,7 @@ if (!function_exists('findProjectJson')) {
 		$dir = $startDir;
 		// Primeiro procura subindo na hierarquia
 		for ($i = 0; $i < 10; $i++) {
-			$path = $dir . DIRECTORY_SEPARATOR . 'turbo.json';
+			$path = $dir . DIRECTORY_SEPARATOR . 'turbomvc.json';
 			if (is_file($path)) {
 				return $path;
 			}
@@ -69,7 +69,7 @@ if (!function_exists('findProjectJson')) {
 					}
 					$siblingPath = $parent . DIRECTORY_SEPARATOR . $sibling;
 					if (is_dir($siblingPath)) {
-						$jsonPath = $siblingPath . DIRECTORY_SEPARATOR . 'turbo.json';
+						$jsonPath = $siblingPath . DIRECTORY_SEPARATOR . 'turbomvc.json';
 						if (is_file($jsonPath)) {
 							return $jsonPath;
 						}
@@ -112,7 +112,7 @@ if ($projectJson) {
 		AutoLoader::registerForNamespace(getCallerDirectory(), $callerDir);
 	}
 } else {
-	error_log("TURBO DEBUG: No project.json found for caller dir: " . ($callerDir ?? 'NULL'));
+	error_log("TURBO DEBUG: No turbomvc.json found for caller dir: " . ($callerDir ?? 'NULL'));
 	AutoLoader::registerForNamespace(getCallerDirectory(), $callerDir);
 }
 
