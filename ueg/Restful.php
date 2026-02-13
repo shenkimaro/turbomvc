@@ -3,7 +3,7 @@
 namespace library\ueg;
 
 if(!class_exists('Restful')){
-	require_once __DIR__.'/../Restful.php5';
+	require_once __DIR__.'/../Restful.php';
 }
 
 /**
