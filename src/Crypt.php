@@ -56,7 +56,7 @@ class Crypt {
 	/**
 	 * Realiza funcao de hash use uma constante da classe Crypt
 	 * @param string $data
-	 * @param const $algoritmo
+	 * @param string $algoritmo
 	 * @return string
 	 */
 	public static function hash($data, $algoritmo, $binary = false) {
