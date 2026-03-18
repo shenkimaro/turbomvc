@@ -233,7 +233,7 @@ class Restful {
 	 * Uso: $restful = Restful::create();
 	 * @param string|null $type Tipo específico ou usa o padrão
 	 * @param mixed|null $swooleResponse Response específico para Swoole
-	 * @return RestfulOutputInterface
+	 * @return Restful
 	 */
 	public static function create($type = null, $swooleResponse = null) {
 		return RestfulFactory::create($type, $swooleResponse);
@@ -262,7 +262,7 @@ class Restful {
 	 * Detecta automaticamente o ambiente
 	 * Uso: $restful = Restful::createAuto($swooleResponse);
 	 * @param mixed|null $swooleResponse Response do Swoole se disponível
-	 * @return RestfulOutputInterface
+	 * @return Restful
 	 */
 	public static function createAuto($swooleResponse = null) {
 		return RestfulFactory::createAuto($swooleResponse);

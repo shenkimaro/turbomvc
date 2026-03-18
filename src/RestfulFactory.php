@@ -39,7 +39,7 @@ class RestfulFactory {
      * Cria uma instância do Restful baseada na configuração
      * @param string|null $type Tipo específico ou usa o padrão
      * @param mixed|null $swooleResponse Response específico para Swoole
-     * @return RestfulOutputInterface
+     * @return Restful
      */
     public static function create($type = null, $swooleResponse = null) {
         $type = $type ?? self::$defaultType;
@@ -86,7 +86,7 @@ class RestfulFactory {
     /**
      * Detecta automaticamente o ambiente e retorna a implementação apropriada
      * @param mixed|null $swooleResponse Response do Swoole se disponível
-     * @return RestfulOutputInterface
+     * @return Restful
      */
     public static function createAuto($swooleResponse = null) {
         // Se foi passado um response do Swoole, usa implementação Swoole
