@@ -641,7 +641,7 @@ class TDG {
     }
 
     private function logAction($sql) {
-        if (!$GLOBALS['configLog']['status']) {
+        if (!$this->isConfigLogEnabled()) {
             return;
         }
         $sql_property_name = 'sql';
@@ -651,6 +651,10 @@ class TDG {
 
         $logArray[$sql_property_name] = ($sql);
         self::getConnectionDbLog()->saveLogDefault($logArray);
+    }
+
+    private function isConfigLogEnabled(): bool {
+        return isset($GLOBALS['configLog']['status']) && $GLOBALS['configLog']['status'];
     }
 
     //************************************************************************************************************************\\
@@ -668,7 +672,7 @@ class TDG {
         if (!$ok) {
             throw new Exception($this->db->getError());
         } else {
-            if ($GLOBALS['configLog']['status']) {
+            if ($this->isConfigLogEnabled()) {
                 $sql_property_name = 'sql';
                 if (isset($GLOBALS['configLog']['sql_property_name']))
                     $sql_property_name = $GLOBALS['configLog']['sql_property_name'];
@@ -694,7 +698,7 @@ class TDG {
         if (!$ok) {
             throw new Exception($this->db->getError());
         } else {
-            if ($GLOBALS['configLog']['status']) {
+            if ($this->isConfigLogEnabled()) {
                 $sql_property_name = 'sql';
                 if (isset($GLOBALS['configLog']['sql_property_name']))
                     $sql_property_name = $GLOBALS['configLog']['sql_property_name'];
