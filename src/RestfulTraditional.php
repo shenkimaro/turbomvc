@@ -23,9 +23,7 @@ class RestfulTraditional extends Restful implements RestfulOutputInterface {
 
         if ($this->tipo_saida == 'json') {
             header("Content-Type: application/{$this->tipo_saida};");
-            if ($data instanceof DTO) {
-                $data = $this->getProperties($data);
-            }
+            $data = $this->normalizeDataForJson($data);
             if ($data == null) {
                 $data = [];
             }

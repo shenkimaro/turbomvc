@@ -120,9 +120,7 @@ class Restful {
 
 		if ($this->tipo_saida == 'json') {
 			header("Content-Type: application/{$this->tipo_saida};");
-			if ($data instanceof DTO) {
-				$data = $this->getProperties($data);
-			}
+			$data = $this->normalizeDataForJson($data);
 			if ($data == null) {
 				$data = [];
 			}
@@ -154,6 +152,22 @@ class Restful {
 			$obj[$field] = $value;
 		}
 		return $obj;
+	}
+
+	protected function normalizeDataForJson($data) {
+		if ($data instanceof DTO) {
+			return $this->getProperties($data);
+		}
+
+		if (is_array($data)) {
+			$normalized = [];
+			foreach ($data as $key => $value) {
+				$normalized[$key] = $this->normalizeDataForJson($value);
+			}
+			return $normalized;
+		}
+
+		return $data;
 	}
 
 	public function setTipoSaida($tipoSaida) {

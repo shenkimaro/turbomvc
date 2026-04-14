@@ -43,9 +43,7 @@ class RestfulSwoole extends Restful implements RestfulOutputInterface {
 
         if ($this->tipo_saida == 'json') {
             $this->response->header("Content-Type", "application/json");
-            if ($data instanceof DTO) {
-                $data = $this->getProperties($data);
-            }
+            $data = $this->normalizeDataForJson($data);
             if ($data == null) {
                 $data = [];
             }
