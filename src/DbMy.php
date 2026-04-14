@@ -352,7 +352,6 @@ class DbMy {
 	public function beginTransaction() {
 		$sql = "START TRANSACTION;";
 		$var = $this->execute($sql);
-		$this->error = mysql_error($this->con);
 		return true;
 	}
 
@@ -366,7 +365,6 @@ class DbMy {
 	public function rollback() {
 		$sql = "ROLLBACK;";
 		$var = $this->execute($sql);
-		$this->error = mysqli_error($this->con);
 		return true;
 	}
 
