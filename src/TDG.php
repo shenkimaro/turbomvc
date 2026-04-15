@@ -1217,6 +1217,8 @@ class TDG {
         $sqlLimit = $this->getSqlLimit($sql);
 
         $result = $this->genericQuery($sqlLimit);
+        $view = $this->getInstanceView();
+        $view->setCount($count, count($result));
         $data['pagination'] = $this->getPagination();
         $data['list'] = $result;
         return $data;
