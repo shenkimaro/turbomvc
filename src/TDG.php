@@ -1201,6 +1201,39 @@ class TDG {
         return $result;
     }
 
+    /**
+     * Executa uma instrucao sql com LIMIT E OFFSET direta no banco
+     * e executa um count do total da tabela retornando os dados
+     *
+     * @param string $sql
+     * @return array
+     */
+    public function queryCount($sql) {
+        //remove o caractere ';' do fim da sql para que seja possivel manipulá-la
+        $sql = rtrim($sql, ';');
+
+        $count = $this->getCountSql($sql);
+
+        $sqlLimit = $this->getSqlLimit($sql);
+
+        $result = $this->genericQuery($sqlLimit);
+        $data['pagination'] = $this->getPagination();
+        $data['list'] = $result;
+        return $data;
+    }
+
+    private function getPagination() {
+        $view = $this->getInstanceView();
+        return [
+            'actualLine' => $view->getDefault('actualLine'),
+            'countRows' => $view->getDefault('countRows'),
+            'previousPage' => $view->getDefault('previousPage'),
+            'nextPage' => $view->getDefault('nextPage'),
+            'lastPage' => $view->getDefault('lastPage'),
+            'navigation' => $view->getBlocks()['navigation']
+        ];
+    }
+
     private function getSqlLimit($sql) {
         $sql = rtrim($sql, ';');
 
