@@ -178,6 +178,21 @@ class CacheLbr
         $this->clearDir($folder);
     }
 
+    public function clearCache() {
+        if(!$this->cacheEnabled){
+			return;
+		}
+		if(!is_dir($this->pathFolder)){
+			return;
+		}
+		$files = glob($this->pathFolder. '/*'); // get all file names
+		foreach ($files as $file) { // iterate files
+			if (is_file($file)) {
+				unlink($file); // delete file
+			}
+		}
+	}
+
     private function clearDir($folder)
     {
         if (!$this->validateFolder($folder)) {
