@@ -153,6 +153,32 @@ class DbMy {
 		}
 	}
 
+	private function reconnect() {
+		if ($this->con) {
+			@mysqli_close($this->con);
+		}
+		$this->conect();
+	}
+
+	private function ensureConnection() {
+		if (!$this->con) {
+			$this->reconnect();
+			return;
+		}
+		if (@mysqli_ping($this->con) === false) {
+			$this->reconnect();
+		}
+	}
+
+	private function shouldReconnect($errno, $error) {
+		if ($errno === 2006 || $errno === 2013) {
+			return true;
+		}
+		$msg = strtolower((string)$error);
+		return strpos($msg, 'server has gone away') !== false
+			|| strpos($msg, 'lost connection') !== false;
+	}
+
 	//************************************************************************************************************************\\
 	/**
 	 * Executa a sql
@@ -164,12 +190,24 @@ class DbMy {
 	 * caso de erro "1", ou vai retorna-lo "0"
 	 */
 	public function query($sql = '') {
+		$this->ensureConnection();
 		$var = mysqli_query($this->con, $sql);
 		$this->error = mysqli_error($this->con);
-		if ($this->error) {
-			throw new Exception($this->error);
+		if (!$this->error) {
+			return $var;
 		}
-		return $var;
+
+		$errno = mysqli_errno($this->con);
+		if ($this->shouldReconnect($errno, $this->error)) {
+			$this->reconnect();
+			$var = mysqli_query($this->con, $sql);
+			$this->error = mysqli_error($this->con);
+			if (!$this->error) {
+				return $var;
+			}
+		}
+
+		throw new Exception($this->error);
 	}
 
 	//************************************************************************************************************************\\
@@ -407,6 +445,7 @@ class DbMy {
 	}
 
 	public function escape($var) {
+		$this->ensureConnection();
 		return mysqli_escape_string($this->con, $var);
 	}
 
