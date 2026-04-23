@@ -699,7 +699,7 @@ class Conversor {
      */
     public static function somenteAlfaNumerico($str, $caracterEspecial = "_") {
         $strFinal = "";
-        for ($x = 0; $x < mb_strlen($str); $x++) {
+        for ($x = 0; $x < mb_strlen($str??''); $x++) {
             $caracter = $str[$x];
             switch (mb_strtoupper($caracter)) {
                 case 'A':
