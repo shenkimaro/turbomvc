@@ -163,10 +163,6 @@ class DbMy {
 	private function ensureConnection() {
 		if (!$this->con) {
 			$this->reconnect();
-			return;
-		}
-		if (@mysqli_ping($this->con) === false) {
-			$this->reconnect();
 		}
 	}
 
