@@ -187,23 +187,40 @@ class DbMy {
 	 */
 	public function query($sql = '') {
 		$this->ensureConnection();
-		$var = mysqli_query($this->con, $sql);
-		$this->error = mysqli_error($this->con);
-		if (!$this->error) {
-			return $var;
-		}
-
-		$errno = mysqli_errno($this->con);
-		if ($this->shouldReconnect($errno, $this->error)) {
-			$this->reconnect();
+		try {
 			$var = mysqli_query($this->con, $sql);
 			$this->error = mysqli_error($this->con);
 			if (!$this->error) {
 				return $var;
 			}
-		}
 
-		throw new Exception($this->error);
+			$errno = mysqli_errno($this->con);
+			if ($this->shouldReconnect($errno, $this->error)) {
+				$this->reconnect();
+				$var = mysqli_query($this->con, $sql);
+				$this->error = mysqli_error($this->con);
+				if (!$this->error) {
+					return $var;
+				}
+			}
+
+			throw new Exception($this->error);
+		} catch (mysqli_sql_exception $e) {
+			$this->error = $e->getMessage();
+			if ($this->shouldReconnect((int) $e->getCode(), $this->error)) {
+				$this->reconnect();
+				try {
+					$var = mysqli_query($this->con, $sql);
+					$this->error = mysqli_error($this->con);
+					if (!$this->error) {
+						return $var;
+					}
+				} catch (mysqli_sql_exception $retryException) {
+					$this->error = $retryException->getMessage();
+				}
+			}
+			throw new Exception($this->error);
+		}
 	}
 
 	//************************************************************************************************************************\\
